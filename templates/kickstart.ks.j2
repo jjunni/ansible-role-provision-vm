@@ -50,7 +50,7 @@ authconfig --useshadow --passalgo=sha512 --kickstart
 selinux --disabled
 
 # disks
-bootloader --location=mbr --append="selinux=0"
+bootloader --location=mbr
 zerombr
 clearpart --all --initlabel
 {% if kickstart_partitions is defined %}
@@ -62,7 +62,7 @@ part / --fstype="ext4" --fsprofile="news" --grow --size=4096 --ondrive=vda
 part swap --asprimary --size=1024 --ondrive=vda
 {% endif %}
 
-%packages --nobase
+%packages
 @core
 {% if repos is defined %}
 {% for repo in repos %}
@@ -111,7 +111,7 @@ chmod 0400 /root/.ssh/authorized_keys
 {% endif %}
 
 {% if routes is defined %}
-{% for route in routes %} 
+{% for route in routes %}
 /sbin/ip route add {{ route }}
 {% endfor %}
 {% endif %}
@@ -121,4 +121,3 @@ chmod 0400 /root/.ssh/authorized_keys
 {% endfor %}
 {% endif %}
 %end
-
